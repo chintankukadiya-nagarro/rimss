@@ -1,6 +1,6 @@
 ## RIMSS demo — storefront stack
 
-**Stack:** `apps/web` (Next.js 14) + `apps/api` (Express + Sequelize + PostgreSQL + Redis) + checkout (Phase 3) + **OfferZone static JSON** (Phase 4).
+**Stack:** `apps/web` (Next.js 14) + `apps/api` (Express + Sequelize + PostgreSQL + Redis) + checkout + **OfferZone static JSON**.
 
 ### Prereqs
 
@@ -11,7 +11,7 @@
 
 Copy example env (**bash**): `cp .env.example .env` — **Windows CMD**: `copy .env.example .env`
 
-(Edit if you change Compose ports.) For **checkout with Stripe**, see **Payment (Phase 3)** in `.env.example` and fill test keys and webhook secret.
+(Edit if you change Compose ports.) For **checkout with Stripe**, see **Payment** in `.env.example` and fill test keys and webhook secret.
 
 ### 2. Data services
 
@@ -54,7 +54,7 @@ Open **http://localhost:3000** — SSR page pulls **`/health/ready`** from **`ht
 
 Expect JSON with `database: "up"` and `redis: "up"`.
 
-### Phase 3 — Checkout (mock or Stripe)
+### Checkout (mock or Stripe)
 
 Default **`PAYMENT_PROVIDER=mock`** (no Stripe account needed):
 
@@ -75,7 +75,7 @@ Default **`PAYMENT_PROVIDER=mock`** (no Stripe account needed):
 
 The Next app rewrites **`/api/*`** to the API (see **`API_PROXY_ORIGIN`**) so **cart and order cookies** stay on **http://localhost:3000**.
 
-### Phase 4 — Offers (static JSON, CMS-ready)
+### Offers (static JSON, CMS-ready)
 
 - Carousel copy and slide list live in **`apps/web/content/offers.json`** (loaded via **`StaticOffersRepository`** implementing **`IOffersContentRepository`**).
 - Homepage **OfferZone** uses CSS variables; try **`/?theme=ocean`** or set **`NEXT_PUBLIC_STORE_THEME=ocean`** for the alternate palette (`stone` is default).

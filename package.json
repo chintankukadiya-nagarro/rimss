@@ -1,0 +1,21 @@
+{
+  "name": "rimss-demo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "compose:up": "docker compose -f infra/docker-compose.yml --env-file .env up -d",
+    "compose:down": "docker compose -f infra/docker-compose.yml --env-file .env down",
+    "db:migrate": "npm run db:migrate -w @rimss/api",
+    "db:seed": "npm run db:seed -w @rimss/api",
+    "dev": "echo Use two terminals: npm run dev:api  and  npm run dev:web",
+    "dev:api": "npm run dev -w @rimss/api",
+    "dev:web": "npm run dev -w @rimss/web",
+    "build": "npm run build -w @rimss/api && npm run build -w @rimss/web"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-rimss}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rimss}
+      POSTGRES_DB: ${POSTGRES_DB:-rimss}
+    volumes:
+      - rimss_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rimss -d rimss"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  rimss_pg_data:

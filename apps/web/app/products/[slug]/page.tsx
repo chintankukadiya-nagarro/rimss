@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { centsToUsd, fetchProductBySlug } from "@/lib/catalog-api";
+import { AddToCartButton } from "@/components/AddToCartButton";
 
 interface PageProps {
   params: { slug: string };
@@ -75,9 +76,9 @@ export default async function ProductDetailPage({
               </span>
             ) : null}
           </p>
+          <AddToCartButton product={p} />
           <p className="text-sm text-stone-600">
-            Phase 2 adds <strong>Add to cart</strong> and checkout. This PDP is wired for
-            catalogue + SEO demo.
+            Free shipping messaging can go here in later phases.
           </p>
           <Link
             href="/products"

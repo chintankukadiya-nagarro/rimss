@@ -32,3 +32,15 @@ export const DATABASE_URL = env(
 export const REDIS_URL = process.env.REDIS_URL ?? "redis://localhost:6380";
 export const SKIP_REDIS = process.env.SKIP_REDIS === "1";
 export const SEARCH_CACHE_TTL_SEC = Number(process.env.SEARCH_CACHE_TTL_SEC ?? 90);
+
+export type PaymentProviderName = "stripe" | "mock";
+
+export const PAYMENT_PROVIDER = ((): PaymentProviderName => {
+  const p = (process.env.PAYMENT_PROVIDER ?? "mock").toLowerCase();
+  return p === "stripe" ? "stripe" : "mock";
+})();
+
+export const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY ?? "";
+export const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET ?? "";
+/** Publishable key returned to browser for Stripe.js (also usable as NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY on web). */
+export const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY ?? "";

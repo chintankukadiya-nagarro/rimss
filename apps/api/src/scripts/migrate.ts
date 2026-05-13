@@ -3,7 +3,7 @@ import { sequelize } from "../db/sequelize";
 
 async function main(): Promise<void> {
   await sequelize.sync();
-  console.log("Migrations/sync complete (products table ensured).");
+  console.log("Migrations/sync complete (products, carts, cart_lines, orders, order_lines, stripe_webhook_events).");
   await sequelize.close();
 }
 

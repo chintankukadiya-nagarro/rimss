@@ -19,7 +19,18 @@ export type ProductCreate = Optional<
   "id" | "category" | "colour" | "imageUrl"
 >;
 
-export class Product extends Model<ProductAttrs, ProductCreate> {}
+export class Product extends Model<ProductAttrs, ProductCreate> implements ProductAttrs {
+  declare id: string;
+  declare slug: string;
+  declare name: string;
+  declare category: string | null;
+  declare colour: string | null;
+  declare priceCents: number;
+  declare onSale: boolean;
+  declare imageUrl: string | null;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
+}
 
 Product.init(
   {

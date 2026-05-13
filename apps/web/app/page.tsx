@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+import { OfferZone } from "@/components/OfferZone";
+import { StaticOffersRepository } from "@/lib/offers/staticRepository";
+import { resolveStoreTheme } from "@/lib/theme";
+
 async function fetchReady(): Promise<Record<string, unknown>> {
   const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
   const res = await fetch(`${base}/health/ready`, {
@@ -13,7 +17,21 @@ async function fetchReady(): Promise<Record<string, unknown>> {
   };
 }
 
-export default async function HomePage(): Promise<JSX.Element> {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}): Promise<JSX.Element> {
+  const rawTheme = searchParams.theme;
+  const qTheme = Array.isArray(rawTheme) ? rawTheme[0] : rawTheme;
+
+  const offersRepo = new StaticOffersRepository();
+  const carousel = await offersRepo.getOfferCarousel();
+  const theme = resolveStoreTheme(
+    qTheme,
+    process.env.NEXT_PUBLIC_STORE_THEME,
+    carousel.theme,
+  );
   let ready: Record<string, unknown>;
   try {
     ready = await fetchReady();
@@ -27,22 +45,21 @@ export default async function HomePage(): Promise<JSX.Element> {
   return (
     <main className="mx-auto max-w-3xl space-y-6 px-4 py-10">
       <div className="space-y-2">
-        <p className="text-xs uppercase tracking-widest text-stone-500">
-          Phase 1 — catalogue + cache demo
-        </p>
         <h1 className="text-2xl font-semibold text-stone-900">
           RIMSS storefront host
         </h1>
         <p className="text-sm text-stone-600">
-          Next.js SSR with faceted catalogue, PDP by slug, and Redis cache-aside on
-          search (<code className="rounded bg-stone-100 px-1 py-0.5 text-xs">X-Cache</code>
-          ). Roadmap continues in{" "}
-          <code className="rounded bg-stone-100 px-1 py-0.5 text-xs">
-            docs/RIMSS_Demo_Build_Plan.md
-          </code>
-          .
+          Next.js host with pluggable <strong>OfferZone</strong> (
+          <code className="rounded bg-stone-100 px-1 py-0.5 text-xs">content/offers.json</code>
+          ), catalogue, cart, and checkout. Try{" "}
+          <Link className="font-medium underline" href="/?theme=ocean">
+            ?theme=ocean
+          </Link>{" "}
+          for alternate CSS tokens.
         </p>
       </div>
+
+      <OfferZone carousel={carousel} theme={theme} />
 
       <section className="flex flex-wrap gap-3 rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
         <Link

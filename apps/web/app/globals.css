@@ -1,3 +1,25 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* Phase 4 — store themes (OfferZone); switch via ?theme=ocean or NEXT_PUBLIC_STORE_THEME */
+:root,
+[data-store-theme="stone"] {
+  --offer-accent: #292524;
+  --offer-on-accent: #fafaf9;
+  --offer-text: #1c1917;
+  --offer-muted: #57534e;
+  --offer-surface: #f5f5f4;
+  --offer-bar: #ffffff;
+  --offer-border: #e7e5e4;
+}
+
+[data-store-theme="ocean"] {
+  --offer-accent: #0e7490;
+  --offer-on-accent: #ecfeff;
+  --offer-text: #134e4a;
+  --offer-muted: #0f766e;
+  --offer-surface: #ccfbf1;
+  --offer-bar: #f0fdfa;
+  --offer-border: #99f6e4;
+}
